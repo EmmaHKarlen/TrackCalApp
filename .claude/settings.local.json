@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Program Files/nodejs/**)",
+      "Read(//c/Users/User/AppData/Roaming/nvm/current/**)",
+      "Read(//c/Users/User/**)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"c:\\\\Users\\\\User\\\\Desktop\\\\Projects\\\\cal-app\\\\cal_app\\\\backend\\\\scripts\\\\delete-today-meals.js\")",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install --save-dev jest supertest mongodb-memory-server)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"/c/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --save-dev jest supertest mongodb-memory-server)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"/c/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --save-dev jest supertest)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"/c/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --save-dev jest supertest --ignore-scripts)"
+    ]
+  }
+}
