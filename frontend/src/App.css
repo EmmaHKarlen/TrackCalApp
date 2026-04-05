@@ -3,6 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
+  overflow-x: hidden;
 }
 
 .app-header {
@@ -136,24 +137,39 @@
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     text-align: center;
   }
 
   .header-content h1 {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .app-nav {
     margin: 10px auto;
+    gap: 6px;
+    padding: 0 10px;
   }
 
   .nav-btn {
     flex: 1;
-    min-width: calc(33.33% - 7px);
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+
+  .date-picker-wrapper {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .date-picker {
+    width: 100%;
+    text-align: center;
   }
 
   .app-main {
-    padding: 0 10px 40px;
+    padding: 0 8px 30px;
   }
 }

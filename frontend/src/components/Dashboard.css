@@ -360,4 +360,8 @@
   .progress-stats {
     align-items: flex-start;
   }
+
+  .check-items {
+    flex-direction: column;
+  }
 }
