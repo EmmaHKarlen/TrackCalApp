@@ -76,6 +76,40 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
+// Get daily summaries for a date range (for history view)
+router.get('/summary/:userId', async (req, res) => {
+  try {
+    const { startDate, endDate } = req.query;
+    if (!startDate || !endDate) return res.status(400).json({ error: 'startDate and endDate required' });
+
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    const meals = await Meal.find({
+      userId: req.params.userId,
+      date: { $gte: start, $lte: end }
+    });
+
+    // Group by date
+    const byDay = {};
+    meals.forEach(m => {
+      const key = m.date.toISOString().split('T')[0];
+      if (!byDay[key]) byDay[key] = { date: key, calories: 0, protein: 0, mealCount: 0 };
+      byDay[key].calories += m.calories;
+      byDay[key].protein += m.protein;
+      byDay[key].mealCount++;
+    });
+
+    // Return sorted array
+    const days = Object.values(byDay).sort((a, b) => a.date.localeCompare(b.date));
+    res.json(days);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Delete meal
 router.delete('/:mealId', async (req, res) => {
   try {

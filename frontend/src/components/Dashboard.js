@@ -4,97 +4,66 @@ import './Dashboard.css';
 
 function Dashboard({ user, selectedDate }) {
   const [mealData, setMealData] = useState({ meals: [], totals: { calories: 0, protein: 0, carbs: 0, fats: 0 } });
-  const [exerciseData, setExerciseData] = useState({ exercises: [], totalCaloriesBurned: 0 });
+  const [tracker, setTracker] = useState({ ateFruit: false, ateVegetable: false });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchTodayData();
+    fetchData();
   }, [user._id, selectedDate]);
 
-  const fetchTodayData = async () => {
+  const fetchData = async () => {
     setLoading(true);
     try {
-      const [mealsRes, exercisesRes] = await Promise.all([
+      const [mealsRes, trackerRes] = await Promise.all([
         axios.get(`/api/meals/today/${user._id}`, { params: { date: selectedDate } }),
-        axios.get(`/api/exercises/today/${user._id}`, { params: { date: selectedDate } })
+        axios.get(`/api/tracker/${user._id}`, { params: { date: selectedDate } })
       ]);
       setMealData(mealsRes.data);
-      setExerciseData(exercisesRes.data);
-      setLoading(false);
+      setTracker(trackerRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
-  const calculateCaloriesLeft = () => {
-    const adjustedTDEE = user.tdee + exerciseData.totalCaloriesBurned;
-    return adjustedTDEE - mealData.totals.calories;
+  const toggleTracker = async (field) => {
+    const newVal = !tracker[field];
+    setTracker(prev => ({ ...prev, [field]: newVal }));
+    await axios.put(`/api/tracker/${user._id}`, { [field]: newVal, date: selectedDate });
   };
 
-  const calculateProteinLeft = () => {
-    return user.proteinTarget - mealData.totals.protein;
-  };
+  const caloriesLeft = user.tdee - mealData.totals.calories;
+  const proteinLeft = user.proteinTarget - mealData.totals.protein;
+  const caloriePercentage = Math.min((mealData.totals.calories / user.tdee) * 100, 100);
+  const proteinPercentage = Math.min((mealData.totals.protein / user.proteinTarget) * 100, 100);
 
-  const getCaloriePercentage = () => {
-    const adjustedTDEE = user.tdee + exerciseData.totalCaloriesBurned;
-    return Math.min((mealData.totals.calories / adjustedTDEE) * 100, 100);
-  };
+  const isToday = selectedDate === (() => {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  })();
 
-  const getProteinPercentage = () => {
-    return Math.min((mealData.totals.protein / user.proteinTarget) * 100, 100);
-  };
-
-  if (loading) {
-    return <div className="loading-spinner">Loading today's data...</div>;
-  }
-
-  const caloriesLeft = calculateCaloriesLeft();
-  const proteinLeft = calculateProteinLeft();
-  const caloriePercentage = getCaloriePercentage();
-  const proteinPercentage = getProteinPercentage();
+  if (loading) return <div className="loading-spinner">Loading...</div>;
 
   return (
     <div className="dashboard">
       <div className="dashboard-hero">
-        <h2>{selectedDate === new Date().toISOString().split('T')[0] ? "Today's Summary" : 'Summary'}</h2>
+        <h2>{isToday ? "Today's Summary" : 'Summary'}</h2>
         <p className="date">{new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
       </div>
 
       <div className="stats-grid">
-        {/* TDEE Card */}
         <div className="stat-card tdee-card">
           <div className="stat-icon">🎯</div>
           <div className="stat-content">
-            <h3>Daily TDEE</h3>
+            <h3>Daily Calorie Target</h3>
             <div className="stat-value">{user.tdee}</div>
-            <div className="stat-detail">Base calories to maintain weight</div>
+            <div className="stat-detail">Based on your stats & routine</div>
           </div>
         </div>
 
-        {/* Exercise Card */}
-        {exerciseData.totalCaloriesBurned > 0 && (
-          <div className="stat-card exercise-card">
-            <div className="stat-icon">💪</div>
-            <div className="stat-content">
-              <h3>Calories Burned</h3>
-              <div className="stat-value">+{exerciseData.totalCaloriesBurned}</div>
-              <div className="stat-detail">{exerciseData.exercises.length} exercise(s) logged</div>
-            </div>
-          </div>
-        )}
-
-        {/* Adjusted TDEE Card */}
-        <div className="stat-card adjusted-card">
-          <div className="stat-icon">⚡</div>
-          <div className="stat-content">
-            <h3>Adjusted TDEE</h3>
-            <div className="stat-value">{user.tdee + exerciseData.totalCaloriesBurned}</div>
-            <div className="stat-detail">With exercises included</div>
-          </div>
-        </div>
-
-        {/* Protein Target Card */}
         <div className="stat-card protein-card">
           <div className="stat-icon">🥚</div>
           <div className="stat-content">
@@ -105,29 +74,24 @@ function Dashboard({ user, selectedDate }) {
         </div>
       </div>
 
-      {/* Progress Bars */}
       <div className="progress-section">
         <div className="progress-card">
           <div className="progress-header">
             <h3>Calorie Intake</h3>
             <div className="progress-stats">
-              <span className="consumed">{mealData.totals.calories} / {user.tdee + exerciseData.totalCaloriesBurned}</span>
+              <span className="consumed">{mealData.totals.calories} / {user.tdee}</span>
               <span className={`remaining ${caloriesLeft >= 0 ? 'positive' : 'negative'}`}>
                 {caloriesLeft >= 0 ? '+' : ''}{Math.round(caloriesLeft)} left
               </span>
             </div>
           </div>
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${caloriePercentage}%` }}
-            ></div>
+            <div className="progress-fill" style={{ width: `${caloriePercentage}%` }}></div>
           </div>
           <div className="progress-detail">
-            {caloriesLeft > 0 
-              ? `You have ${Math.round(caloriesLeft)} calories left to eat`
-              : `You've exceeded by ${Math.round(Math.abs(caloriesLeft))} calories`
-            }
+            {caloriesLeft > 0
+              ? `You have ${Math.round(caloriesLeft)} calories left`
+              : `You've exceeded by ${Math.round(Math.abs(caloriesLeft))} calories`}
           </div>
         </div>
 
@@ -142,23 +106,32 @@ function Dashboard({ user, selectedDate }) {
             </div>
           </div>
           <div className="progress-bar">
-            <div 
-              className="progress-fill protein" 
-              style={{ width: `${proteinPercentage}%` }}
-            ></div>
+            <div className="progress-fill protein" style={{ width: `${proteinPercentage}%` }}></div>
           </div>
           <div className="progress-detail">
-            {proteinLeft > 0 
+            {proteinLeft > 0
               ? `You need ${Math.round(proteinLeft)}g more protein`
-              : `Excellent! You've met your protein goal`
-            }
+              : `Excellent! You've met your protein goal`}
           </div>
         </div>
       </div>
 
-      {/* Meals and Exercises Lists */}
+      <div className="daily-checks">
+        <h3>Daily Checks</h3>
+        <div className="check-items">
+          <button className={`check-item ${tracker.ateFruit ? 'checked' : ''}`} onClick={() => toggleTracker('ateFruit')}>
+            <span className="check-icon">{tracker.ateFruit ? '✅' : '⬜'}</span>
+            <span className="check-label">🍎 Ate a fruit</span>
+          </button>
+          <button className={`check-item ${tracker.ateVegetable ? 'checked' : ''}`} onClick={() => toggleTracker('ateVegetable')}>
+            <span className="check-icon">{tracker.ateVegetable ? '✅' : '⬜'}</span>
+            <span className="check-label">🥦 Ate a vegetable</span>
+          </button>
+        </div>
+      </div>
+
       <div className="lists-section">
-        <div className="list-card">
+        <div className="list-card full-width">
           <h3>🍽️ Meals ({mealData.meals.length})</h3>
           {mealData.meals.length > 0 ? (
             <div className="items-list">
@@ -176,27 +149,6 @@ function Dashboard({ user, selectedDate }) {
             </div>
           ) : (
             <div className="empty-state">No meals logged yet</div>
-          )}
-        </div>
-
-        <div className="list-card">
-          <h3>💪 Exercises ({exerciseData.exercises.length})</h3>
-          {exerciseData.exercises.length > 0 ? (
-            <div className="items-list">
-              {exerciseData.exercises.map(exercise => (
-                <div key={exercise._id} className="list-item exercise-item">
-                  <div className="item-info">
-                    <div className="item-name">{exercise.name}</div>
-                    <div className="item-meta">
-                      <span className="badge">{exercise.duration} min</span>
-                      <span className="badge burn">+{exercise.caloriesBurned} cal</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">No exercises logged yet</div>
           )}
         </div>
       </div>

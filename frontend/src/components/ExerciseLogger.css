@@ -225,24 +225,110 @@
   background: rgba(16, 185, 129, 0.05);
 }
 
+.message-bubble.needs-info {
+  background: #fffbeb;
+  border-color: #fbbf24;
+  border-left: 3px solid #f59e0b;
+}
+
+/* Saved exercise card */
+.saved-exercise-card {
+  margin-top: 8px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  max-width: 75%;
+}
+
+.saved-exercise-title {
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.saved-exercise-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.saved-exercise-name {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.saved-exercise-meta {
+  color: #166534;
+  font-size: 12px;
+}
+
+.saved-exercise-calories {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #86efac;
+  color: #14532d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  width: 60px;
+}
+
+.typing-indicator span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #aaa;
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
 .input-form {
   display: flex;
   gap: 8px;
   padding: 16px;
   background: white;
   border-top: 1px solid #e0e0e0;
+  align-items: flex-end;
 }
 
-.input-form input {
+.input-form textarea {
   flex: 1;
   padding: 12px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-size: 14px;
+  font-family: inherit;
   transition: border-color 0.3s ease;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
+  max-height: 120px;
+  overflow-y: auto;
+  direction: auto;
 }
 
-.input-form input:focus {
+.input-form textarea:focus {
   outline: none;
   border-color: #10b981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);

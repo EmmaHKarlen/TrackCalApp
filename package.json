@@ -1,13 +1,15 @@
 {
-  "name": "calorie-tracker",
+  "name": "emfit",
   "version": "1.0.0",
-  "description": "Full-stack calorie and protein tracking application",
+  "description": "EmFit — Personal nutrition and fitness tracker",
   "scripts": {
     "install-all": "cd backend && npm install && cd ../frontend && npm install",
     "start-backend": "cd backend && npm start",
     "start-frontend": "cd frontend && npm start",
     "dev-backend": "cd backend && npm run dev",
-    "dev": "concurrently \"npm run dev-backend\" \"npm run start-frontend\""
+    "dev": "concurrently \"npm run dev-backend\" \"npm run start-frontend\"",
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd backend && npm install && node server.js"
   },
   "dependencies": {
     "concurrently": "^7.6.0"

@@ -4,9 +4,15 @@ import './App.css';
 import Onboarding from './components/Onboarding';
 import Dashboard from './components/Dashboard';
 import MealLogger from './components/MealLogger';
-import ExerciseLogger from './components/ExerciseLogger';
+import ProfileSettings from './components/ProfileSettings';
+import History from './components/History';
 
-const toDateString = (d) => d.toISOString().split('T')[0]; // YYYY-MM-DD
+const toDateString = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,7 +21,6 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(toDateString(new Date()));
 
   useEffect(() => {
-    // Check if user exists in localStorage
     const userId = localStorage.getItem('userId');
     if (userId) {
       fetchUser(userId);
@@ -42,25 +47,24 @@ function App() {
     setActiveTab('dashboard');
   };
 
+  const handleUserUpdated = (updatedUser) => {
+    setUser(updatedUser);
+  };
+
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('userId');
     setActiveTab('dashboard');
   };
 
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
-  if (!user) {
-    return <Onboarding onUserCreated={handleUserCreated} />;
-  }
+  if (loading) return <div className="loading">Loading...</div>;
+  if (!user) return <Onboarding onUserCreated={handleUserCreated} />;
 
   return (
     <div className="app">
       <header className="app-header">
         <div className="header-content">
-          <h1>🔥 Calorie Tracker</h1>
+          <h1>💪 EmFit</h1>
           <div className="user-info">
             <span>{user.name}</span>
             <button onClick={handleLogout} className="logout-btn">Logout</button>
@@ -69,23 +73,17 @@ function App() {
       </header>
 
       <nav className="app-nav">
-        <button
-          className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
+        <button className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
           📊 Dashboard
         </button>
-        <button
-          className={`nav-btn ${activeTab === 'meals' ? 'active' : ''}`}
-          onClick={() => setActiveTab('meals')}
-        >
+        <button className={`nav-btn ${activeTab === 'meals' ? 'active' : ''}`} onClick={() => setActiveTab('meals')}>
           🍽️ Log Meal
         </button>
-        <button
-          className={`nav-btn ${activeTab === 'exercises' ? 'active' : ''}`}
-          onClick={() => setActiveTab('exercises')}
-        >
-          💪 Log Exercise
+        <button className={`nav-btn ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>
+          📈 History
+        </button>
+        <button className={`nav-btn ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')}>
+          ⚙️ Profile
         </button>
         <div className="date-picker-wrapper">
           <input
@@ -101,7 +99,8 @@ function App() {
       <main className="app-main">
         {activeTab === 'dashboard' && <Dashboard user={user} selectedDate={selectedDate} />}
         {activeTab === 'meals' && <MealLogger user={user} selectedDate={selectedDate} />}
-        {activeTab === 'exercises' && <ExerciseLogger user={user} selectedDate={selectedDate} />}
+        {activeTab === 'history' && <History user={user} />}
+        {activeTab === 'profile' && <ProfileSettings user={user} onUserUpdated={handleUserUpdated} onSaved={() => setActiveTab('dashboard')} />}
       </main>
     </div>
   );

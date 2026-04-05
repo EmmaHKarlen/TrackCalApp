@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
 }
 
 .app-header {
@@ -80,7 +80,7 @@
 
 .nav-btn.active {
   background: rgba(255, 255, 255, 0.9);
-  color: #667eea;
+  color: #e91e8c;
   border-color: white;
 }
 

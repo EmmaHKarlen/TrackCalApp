@@ -1,0 +1,276 @@
+.profile-settings {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.profile-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+.profile-header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
+  color: white;
+}
+
+.profile-header h2 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+}
+
+.profile-header p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.profile-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-section h3 {
+  margin: 0 0 14px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.section-note {
+  font-size: 13px;
+  color: #888;
+  margin: -8px 0 14px 0;
+}
+
+.stats-grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input[type="number"] {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: #e91e8c;
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.1);
+}
+
+.gender-options {
+  display: flex;
+  gap: 16px;
+  padding-top: 6px;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: normal;
+  color: #333;
+}
+
+.steps-group {
+  margin-bottom: 16px;
+}
+
+.steps-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.steps-input-row input {
+  width: 130px;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.steps-input-row input:focus {
+  outline: none;
+  border-color: #e91e8c;
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.1);
+}
+
+.steps-hint {
+  font-size: 14px;
+  color: #666;
+}
+
+.steps-guide {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #999;
+}
+
+.routine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.routine-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.routine-row.active {
+  border-color: #e91e8c;
+  background: rgba(233, 30, 140, 0.03);
+}
+
+.routine-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.routine-emoji {
+  font-size: 22px;
+  min-width: 28px;
+}
+
+.routine-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.routine-description {
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.routine-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counter-btn {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #e91e8c;
+  border-radius: 50%;
+  background: white;
+  color: #e91e8c;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.counter-btn:hover {
+  background: #e91e8c;
+  color: white;
+}
+
+.counter-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  min-width: 26px;
+  text-align: center;
+}
+
+.routine-summary {
+  text-align: center;
+  color: #e91e8c;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(233, 30, 140, 0.08);
+  border-radius: 8px;
+}
+
+.current-tdee {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  background: #f9f9f9;
+  font-size: 14px;
+  color: #555;
+  border-top: 1px solid #f0f0f0;
+}
+
+.current-tdee strong {
+  color: #e91e8c;
+  font-size: 16px;
+}
+
+.tdee-note {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.btn-save {
+  display: block;
+  width: calc(100% - 48px);
+  margin: 16px 24px 24px;
+  padding: 14px;
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(233, 30, 140, 0.4);
+}
+
+.btn-save:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .stats-grid-form {
+    grid-template-columns: 1fr;
+  }
+}

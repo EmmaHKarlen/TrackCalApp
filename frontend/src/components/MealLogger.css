@@ -19,7 +19,7 @@
 .logger-header {
   padding: 20px;
   border-bottom: 2px solid #f0f0f0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
   color: white;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .message.user .message-bubble {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
   color: white;
   border-radius: 12px 4px 12px 12px;
 }
@@ -99,8 +99,8 @@
 }
 
 .confirmation-alert {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-  border: 2px solid #667eea;
+  background: linear-gradient(135deg, rgba(233, 30, 140, 0.1), rgba(194, 24, 91, 0.1));
+  border: 2px solid #e91e8c;
   border-radius: 12px;
   padding: 16px;
   width: 100%;
@@ -152,7 +152,7 @@
 }
 
 .meal-item .value.highlight {
-  color: #667eea;
+  color: #e91e8c;
 }
 
 .meal-item-checkbox {
@@ -166,7 +166,7 @@
 
 .meal-item-checkbox:hover {
   background: #f0f0f0;
-  border-color: #667eea;
+  border-color: #e91e8c;
 }
 
 .meal-item-checkbox label {
@@ -276,9 +276,9 @@
 }
 
 .quick-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
+  border-color: #e91e8c;
+  color: #e91e8c;
+  background: rgba(233, 30, 140, 0.05);
 }
 
 .input-form {
@@ -308,13 +308,13 @@
 
 .input-form textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #e91e8c;
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.1);
 }
 
 .input-form button {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -325,7 +325,7 @@
 
 .input-form button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(233, 30, 140, 0.4);
 }
 
 .input-form button:disabled {

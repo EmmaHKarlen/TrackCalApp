@@ -80,7 +80,7 @@
 .stat-value {
   font-size: 28px;
   font-weight: bold;
-  color: #667eea;
+  color: #e91e8c;
   margin-bottom: 4px;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .tdee-card {
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #e91e8c;
 }
 
 .exercise-card {
@@ -168,7 +168,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #e91e8c 0%, #c2185b 100%);
   border-radius: 6px;
   transition: width 0.5s ease;
 }
@@ -183,10 +183,65 @@
   text-align: center;
 }
 
+.daily-checks {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.daily-checks h3 {
+  color: #333;
+  font-size: 16px;
+  margin: 0 0 14px 0;
+}
+
+.check-items {
+  display: flex;
+  gap: 12px;
+}
+
+.check-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+
+.check-item:hover {
+  border-color: #e91e8c;
+}
+
+.check-item.checked {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+
+.check-icon {
+  font-size: 20px;
+}
+
+.check-label {
+  font-weight: 500;
+  color: #333;
+}
+
 .lists-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+}
+
+.list-card.full-width {
+  grid-column: 1 / -1;
 }
 
 .list-card {
@@ -217,7 +272,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #e91e8c;
   transition: all 0.2s ease;
 }
 
@@ -227,7 +282,7 @@
 }
 
 .meal-item {
-  border-left-color: #667eea;
+  border-left-color: #e91e8c;
 }
 
 .exercise-item {
@@ -252,8 +307,8 @@
 
 .badge {
   display: inline-block;
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: rgba(233, 30, 140, 0.1);
+  color: #e91e8c;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;

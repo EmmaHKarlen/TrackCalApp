@@ -35,16 +35,26 @@ function MealLogger({ user, selectedDate }) {
     setLoading(true);
 
     try {
-      // Build history for the API (exclude the initial assistant greeting from history
-      // but keep all subsequent messages)
       const history = nextMessages
-        .slice(1) // skip the initial greeting
+        .slice(1)
         .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.text }));
+
+      const mealsRes = await axios.get(`/api/meals/today/${user._id}`, { params: { date: selectedDate } });
+
+      const userContext = {
+        tdee: user.tdee,
+        proteinTarget: user.proteinTarget,
+        weight: user.weight,
+        caloriesEaten: mealsRes.data.totals.calories,
+        proteinEaten: mealsRes.data.totals.protein,
+        caloriesBurned: 0
+      };
 
       const res = await axios.post('/api/chat', {
         userId: user._id,
         messages: history,
-        date: selectedDate
+        date: selectedDate,
+        userContext
       });
 
       const { message, savedFoods, shouldSave, needsInfo } = res.data;

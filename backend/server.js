@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -14,12 +15,21 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/calorie-t
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
 
-// Routes
+// API Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/meals', require('./routes/meals'));
 app.use('/api/exercises', require('./routes/exercises'));
 app.use('/api/nutrition', require('./routes/nutrition'));
 app.use('/api/chat', require('./routes/chat'));
+app.use('/api/exercise-chat', require('./routes/exerciseChat'));
+app.use('/api/tracker', require('./routes/tracker'));
+
+// Serve React frontend in production
+const frontendBuild = path.join(__dirname, '..', 'frontend', 'build');
+app.use(express.static(frontendBuild));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendBuild, 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
